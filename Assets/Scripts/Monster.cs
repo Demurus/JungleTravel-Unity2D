@@ -7,13 +7,11 @@ public class Monster : Unit
     
     protected float speed = 2.0F;
     protected int lives = 2;
-    //float monsterDirection = 1F;
-    //Vector3 direction;
-     //Rigidbody2D rigidbody;
+   
     protected Animator animator;
     private Animator charAnimator;
     private SpriteRenderer sprite;
-   // protected Vector2 monsterVelocity;
+   
     protected bool monsterStop = false;
     protected Transform monsterTransform;
     protected float monsterWidth;
@@ -21,11 +19,14 @@ public class Monster : Unit
     public AudioClip smallZombieHurt;
     public AudioClip smallZombieMaleDeath;
     private AudioSource source;
-    protected string monsterName = "Male";
-    
+    protected bool monsterIsDead = false;
 
 
-     protected virtual AudioClip GetAudio()
+    protected virtual AudioClip GetZombieHurtAudio()
+    {
+        return smallZombieHurt;
+    }
+     protected virtual AudioClip GetMonsterDeathAudio()
     {
         return smallZombieMaleDeath;
     }
@@ -41,20 +42,20 @@ public class Monster : Unit
     }
     public override void ReceiveDamage()
     {
-
+        monsterIsDead = true;
         State = MonsterState.Dead;
         monsterStop = true;
-        source.PlayOneShot(GetAudio());
-        Debug.Log(State);
+        source.PlayOneShot(GetMonsterDeathAudio());
+        
         GetComponent<Collider2D>().enabled = false;
         Invoke("DestroyMonster", 10.0F);
     }
-    protected MonsterState State
+    protected virtual MonsterState State
     {
         get { return (MonsterState)animator.GetInteger("State"); }
         set { animator.SetInteger("State", (int)value); }
     }
-
+    protected virtual void Shoot() { }
     protected bool IsDead()
     {
         return State == MonsterState.Dead;
@@ -62,29 +63,21 @@ public class Monster : Unit
 
     protected override void Update()
     {
-        // Debug.Log(monsterName);
-       
-        
-            Move();
-        
-        
-
+         Move();
     }
 
     protected override void Awake()
     {
-      //  rigidbody = GetComponent<Rigidbody2D>();
+      
         animator = GetComponent<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         source = GetComponent<AudioSource>();
         charPunchsource = GetComponent<AudioSource>();
-        //charPunchArray[0] = charPunch1;
-        //charPunchArray[1] = charPunch2;
-        //charPunchArray[2] = charPunch3;
+       
 
     }
 
-    protected void Flip()
+    protected override void Flip()
     {
         Vector3 currentRotation = monsterTransform.eulerAngles;
         currentRotation.y += 180;
@@ -92,7 +85,7 @@ public class Monster : Unit
     }
     protected void Move()
     {
-        if (IsDead())
+        if (monsterIsDead)
         {
             return;
         }
@@ -119,27 +112,28 @@ public class Monster : Unit
 
     }
 
-     protected void OnCollisionEnter2D(Collision2D collision)
+     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         
         Character character = collision.gameObject.GetComponent<Character>();
         Unit unit = GetComponent<Monster>();
 
-
-        if (character)
+        if (IsDead())
         {
-            if (State != MonsterState.Dead)
+            return;
+        }
+            if (character)
             {
+            
               foreach (ContactPoint2D point in collision.contacts)
                 {
-                    Debug.Log(point.normal);
+                    
                     if (point.normal.y == -1.0F)
                     {
                         unit.ReceiveDamage();
                         int punchRandom = Random.Range(0, 2);
                         charPunchsource.PlayOneShot(charPunchArray[punchRandom]);
                         character.rigidbody.AddForce(transform.up * 15.0F, ForceMode2D.Impulse);
-                        
                         break;
                             }
                     else
@@ -148,25 +142,23 @@ public class Monster : Unit
                         character.ReceiveDamage();
                         break;
                     }
-                    
-                }
-                
+
             }
 
         }
         if (collision.collider.tag == "Obstacle" || collision.collider.tag=="Monster")
         {
-            if (State != MonsterState.Dead) Flip();
+            Flip();
         }
 
     }
 
-    protected void OnCollisionExit2D(Collision2D collision)
+    protected virtual void OnCollisionExit2D(Collision2D collision)
     {
         Character character = collision.collider.GetComponent<Character>();
         if (character)
         {
-            if (State != MonsterState.Dead)
+            if (!IsDead())
             {
                 State = MonsterState.Idle;
             }
@@ -175,7 +167,7 @@ public class Monster : Unit
         }
     }
    
-    protected void OnTriggerEnter2D(Collider2D collider)
+    protected virtual void OnTriggerEnter2D(Collider2D collider)
     {
         Character character = collider.gameObject.GetComponent<Character>();
         Unit unit = GetComponent<Monster>();
@@ -205,6 +197,9 @@ public class Monster : Unit
         Idle,
         Dead,
         Attack,
-        Hit
+        Hit,
+        Shoot,
+        ReturnToIdle,
+        Run
     }
 }

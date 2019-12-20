@@ -6,17 +6,13 @@ public class MonsterFemale : Monster
 {
     public AudioClip smallZombieFemaleDeath;
     
-    protected string monsterName = "Female";
+   
 
-    protected override AudioClip GetAudio()
+    protected override AudioClip GetMonsterDeathAudio()
     {
         return smallZombieFemaleDeath;
     }
-    //protected override void Start()
-    //{
-    //    monsterTransform = transform;
-    //    monsterWidth = GetComponentInChildren<SpriteRenderer>().bounds.extents.x;
-    //}
+    
     
 
 }

@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
     bool gameHasEnded = false;
     private float restartDelay = 2F;
+    public GameObject currentCheckPoint;
+   
     public void EndGame()
     {
         if (gameHasEnded == false)
@@ -15,10 +17,10 @@ public class GameManager : MonoBehaviour
             Debug.Log("game over");
             Invoke("Restart", restartDelay);
         }
-        
     }
     void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+   
 }

@@ -17,14 +17,16 @@ public class Heart : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         Character character = collider.GetComponent<Character>();
-
-        if (character)
+        if(character != null) 
         {
-            character.Lives++;
-            Debug.Log(character.Lives);
-            source.PlayOneShot(heartTake);
-            animator.SetBool("Puff", true);
-            Destroy(gameObject,0.6F);
+            if (character.Lives < 5)
+            {
+                character.Lives++;
+                source.PlayOneShot(heartTake);
+                animator.SetBool("Puff", true);
+                Destroy(gameObject, 0.6F);
+
+            }
         }
     }
 }

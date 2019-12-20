@@ -8,7 +8,7 @@ public class ShootableMonsterfemale : ShootableMonsterMale
     public AudioClip AlcoZombieFemaleDeath;
     
 
-    protected override  AudioClip GetAudio()
+    protected override  AudioClip GetMonsterDeathAudio()
     {
         return AlcoZombieFemaleDeath;
     }

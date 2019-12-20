@@ -5,13 +5,10 @@ using UnityEngine;
 public class Coconut : Bullet
 {
     private float speed = 10.0F;
-    //private Vector3 direction;
-    //public Vector3 Direction { set { direction = value; } }
-    private SpriteRenderer sprite;
+    //private SpriteRenderer sprite;
     private GameObject parent;
-    //private Animator animator;
-    new private Rigidbody2D rigidbody;
-
+    //new private Rigidbody2D rigidbody;
+    public GameObject muzzleFlash;
     public AudioClip coconutColapse;
     private AudioSource source;
     public GameObject Parent
@@ -21,11 +18,10 @@ public class Coconut : Bullet
 
     private void Awake()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
-        sprite = GetComponentInChildren<SpriteRenderer>();
+        //rigidbody = GetComponent<Rigidbody2D>();
+        //sprite = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponent<Animator>();
         source = GetComponent<AudioSource>();
-
     }
 
     protected override void Update()
@@ -36,11 +32,9 @@ public class Coconut : Bullet
     protected override void Collapse()
     {
         base.Collapse();
-        //float vol = Random.Range(volBulletLowRange, volBulletHighRange);
+        Instantiate(muzzleFlash, transform.position, transform.rotation);
         source.PlayOneShot(coconutColapse);
         speed = 0F;
-        //animator.SetBool("Collapse", true);
-       // Destroy(gameObject, 0.2F);
     }
 
 
@@ -59,7 +53,5 @@ public class Coconut : Bullet
         }
         
     }
-   
-
 
 }

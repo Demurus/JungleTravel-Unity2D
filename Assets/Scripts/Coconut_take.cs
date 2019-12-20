@@ -19,8 +19,7 @@ public class Coconut_take : MonoBehaviour
         if (character)
         {
             character.CoconutsAmount++;
-            Debug.Log(character.CoconutsAmount);
-            source.PlayOneShot(coconutTake,3.0F);
+            source.PlayOneShot(coconutTake,4.0F);
             Destroy(gameObject,0.12F);
             coconutCounter.Refresh();
         }

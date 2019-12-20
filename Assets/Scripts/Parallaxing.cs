@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class Parallaxing : MonoBehaviour
 {
-    public Transform[] backgorunds; //массив (список) фонов, которые мы хотим параллаксить
-    private float[] parallaxScales; // пропорции движения камеры, по которым будут двигаться параллаксы
-    public float smoothing = 1F; //мягкость параллакса. Должен быть больше 0
+    public Transform[] backgorunds; //List of backgrounds we want to pbe parallaxed
+    private float[] parallaxScales; // camera movement scales which parallax will use
+    public float smoothing = 1F; //parallax smoothing. has to be more than 1
 
-    private Transform cam; //ссылка на трансформ главной камеры
-    private Vector3 previousCamPos; //позиция камеры на предыдущем кадре
-
-    private void Awake() // всегда вызывается до Start()
+    private Transform cam; 
+    private Vector3 previousCamPos; //main camera position on previous frame
+    private void Awake() 
     {
-        cam = Camera.main.transform;  //ссылка на главную камеру
+        cam = Camera.main.transform;  //main camera transform link 
 
     }
     void Start()
@@ -32,12 +31,12 @@ public class Parallaxing : MonoBehaviour
     {
         for (int i = 0; i < backgorunds.Length; i++)
         {
-            //parallax- разница между предыдущей позицией камеры и нынешней (по х), умноженная на масштаб фонов. Чем дальше фон - тем сильнее параллакс
+            //parallax - difference between previous camera position and current (x axis), multiplied to BG scale(z axis). The further is BG - the stronger the parallax
             float parallax = (previousCamPos.x - cam.position.x) * parallaxScales[i];
-            //устанавливаем целевую точку фонов по Х, которая есть нынешняя позиция+наш парраллакс
-            float backgroundTargetPosX = backgorunds[i].position.x + parallax;
+            //set the target point of BG (X axis), which is our current position + parallax 
+            float backgroundTargetPosX = backgorunds[i].position.x - parallax;
             Vector3 backgroundTargetPos = new Vector3(backgroundTargetPosX, backgorunds[i].position.y, backgorunds[i].position.z);
-            //мягкий переход из нынешнего положения в целевое используя Lerp
+            //smooth transition from current pos to target using Lerp
             backgorunds[i].position = Vector3.Lerp(backgorunds[i].position, backgroundTargetPos, smoothing * Time.deltaTime);
             previousCamPos = cam.position;
         }

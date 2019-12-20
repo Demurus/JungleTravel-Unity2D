@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 919787910060907170}
   m_Layer: 0
   m_Name: Platform
-  m_TagString: Floor
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

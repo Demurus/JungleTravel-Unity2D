@@ -12,7 +12,7 @@ public class Deadzone : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Unit unit = collision.GetComponent<Unit>(); //проверяем, есть ли на этом коллайдере обьекти типа Юнит
+        Unit unit = collision.GetComponent<Unit>(); 
         Character character = collision.GetComponent<Character>();
         if (character) 
         {
