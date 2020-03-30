@@ -56,6 +56,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -164,10 +165,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99c994bbd63a4d24a9824d9bca16c5dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: {x: 0, y: 0, z: 0}
-  volBulletLowRange: 0.5
-  volBulletHighRange: 1
-  bottleCollapse: {fileID: 8300000, guid: 5d38120bb8aabc842a22f4dd5424bd4d, type: 3}
+  Audio: {fileID: 7965206072137585448}
+  BottleCollapse: {fileID: 8300000, guid: 5d38120bb8aabc842a22f4dd5424bd4d, type: 3}
 --- !u!95 &7788094040693004784
 Animator:
   serializedVersion: 3

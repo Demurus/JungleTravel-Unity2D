@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4637922324681264057}
   m_Layer: 0
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: CoconutBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,12 +81,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb926cb2d8f0c047a25cb2d548e2a45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: {x: 0, y: 0, z: 0}
-  volBulletLowRange: 0.5
-  volBulletHighRange: 1
-  muzzleFlash: {fileID: 2435829061147657517, guid: 4405df8bf7ebaa148b7a77bf2903b17b,
+  Audio: {fileID: 4637922324681264057}
+  MuzzleFlash: {fileID: 2435829061147657517, guid: 4405df8bf7ebaa148b7a77bf2903b17b,
     type: 3}
-  coconutColapse: {fileID: 8300000, guid: 15b55bc6714c02148bc57c2f0f1b5e26, type: 3}
+  CoconutColapse: {fileID: 8300000, guid: 15b55bc6714c02148bc57c2f0f1b5e26, type: 3}
 --- !u!95 &4637922324681264063
 Animator:
   serializedVersion: 3
@@ -279,6 +277,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
